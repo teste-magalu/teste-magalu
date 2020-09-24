@@ -1,0 +1,19 @@
+#!/bin/bash
+
+while true; do
+  PG_STATUS=`PGPASSWORD=$POSTGRES_PW psql -U $POSTGRES_USER  -w -h $POSTGRES_URL -c '\l \q' | grep postgres | wc -l`
+  if ! [ "$PG_STATUS" -eq "0" ]; then
+   break
+  fi
+
+  echo "Waiting Database Setup"
+  sleep 10
+done
+
+PGPASSWORD=$POSTGRES_PW psql -U $POSTGRES_USER -w -h $POSTGRES_URL -c "CREATE DATABASE ${POSTGRES_DB} OWNER ${POSTGRES_USER}"
+PGPASSWORD=$POSTGRES_PW psql -U $POSTGRES_USER -w -h $POSTGRES_URL -d "magalu" -c "CREATE EXTENSION unaccent;"
+
+# flask db init
+# flask db migrate
+flask db upgrade
+uwsgi --ini uwsgi.ini
