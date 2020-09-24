@@ -55,3 +55,51 @@ Para rodar basta ter o docker e o docker-compose instalado na máquina e dentro 
 ```
 docker-compose up
 ```
+
+## Como rodar teste unitário
+
+Para rodar os testes unitários o ambiente deve ser instalado da seguinte forma:
+
+Deve ter instalado na máquina python3, virtualenv, e PostgreSQL
+
+As variáveis a baixo devem ser setadas
+
+```
+export ENV=production
+export POSTGRES_USER=USUARIO_DO_BANCO
+export POSTGRES_PW=SENHA
+export POSTGRES_URL=HOST
+export POSTGRES_DB=BANCO
+```
+
+Crie o ambiente virtual do projeto:
+
+```
+virtualenv venv
+```
+
+Entre no ambiente virtual:
+
+```
+source venv/bin/activate
+```
+
+Instale as dependencias de teste:
+
+```
+pip install -r requirements-dev.txt
+```
+
+Agora rode o comando para popular a base:
+
+```
+flask db upgrade
+```
+
+Por fim, para rodar os testes rode:
+
+```
+pytest
+```
+
+Observação: para os testes rodarem de forma correta o banco de dados deve está zerado

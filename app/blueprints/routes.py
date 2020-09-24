@@ -103,8 +103,9 @@ def put_message(id):
 						message.date_time = payload['date_time']
 
 				db.session.commit()		
-				data = {'message': 'message updated'}
-				return jsonify(data), 200
+				return jsonify(
+							{'id': message.id, 'recipient': message.recipient, 'message': message.message, 'date_time': str(message.date_time),
+							'status': message.status}), 200
 
 		except Exception as e:
 				print('ERROR: {}'.format(e))
