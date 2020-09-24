@@ -46,3 +46,12 @@ O valor da chave date_time deve ser no formato A-M-D 00:00:00 (ex: 2020-09-23 19
 
 O valor da chave status deve ter true ou false
 
+## Como rodar o backend:
+
+Para facilitar o processo de rodar o código foi criado o docker-compose.yml que tem o banco de dados (PostgreSQL) e o código do teste.
+
+Para rodar basta ter o docker e o docker-compose instalado na máquina e dentro da pasta raiz deste projeto rodar no terminal o seguinte comando:
+
+```
+docker-compose up
+```

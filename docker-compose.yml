@@ -1,0 +1,33 @@
+version: '2'
+
+services:
+  db:
+    image: postgres:12.4
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: magalu
+      PGDATA : /var/lib/postgresql/data/
+    volumes:
+     - pg_data:/var/lib/postgresql/data/
+
+  magalu-challenge:
+    build: .
+    ports: 
+      - "5000:5000"
+    command: ./runserver
+    links:
+      - db
+    depends_on:
+      - db
+    environment:
+      ENV: production
+      POSTGRES_USER: postgres
+      POSTGRES_PW: root
+      POSTGRES_URL: db
+      POSTGRES_DB: magalu
+
+volumes:
+  pg_data:
+    driver: local
